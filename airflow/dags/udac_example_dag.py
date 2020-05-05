@@ -104,7 +104,13 @@ load_artist_dimension_table = LoadDimensionOperator(
 
 load_time_dimension_table = LoadDimensionOperator(
     task_id='Load_time_dim_table',
-    dag=dag
+    dag=dag,
+    
+    redshift_conn_id="redshift",
+    aws_credentials_id="aws_credentials",
+    sql=SqlQueries.time_table_insert,
+    table='time',
+    append_data=False
 )
 
 run_quality_checks = DataQualityOperator(
