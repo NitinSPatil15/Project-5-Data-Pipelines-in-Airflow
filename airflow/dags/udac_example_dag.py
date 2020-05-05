@@ -28,6 +28,13 @@ dag = DAG('udac_example_dag',
 
 start_operator = DummyOperator(task_id='Begin_execution',  dag=dag)
 
+create_tables = PostgresOperator(
+    task_id="create_tables",
+    dag=dag,
+    postgres_conn_id="redshift",
+    sql="create_tables.sql"
+)
+
 stage_events_to_redshift = StageToRedshiftOperator(
     task_id='Stage_events',
     dag=dag
